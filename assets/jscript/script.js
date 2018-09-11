@@ -133,7 +133,7 @@ var triviaQuestions = {
     ]
  }
 
- var question = triviaQuestions.results; 
+var question = triviaQuestions.results; 
 
 var game = {
     "round": 0,
@@ -170,7 +170,8 @@ function grabQandA(gameRound) {
         answers.push(question[gameRound].incorrect_answers[i]);
         console.log(question[gameRound].incorrect_answers[i]);
     }
-
+    // SHUFFLE THE ARRAY
+    shuffleArray(answers);
     // WRITE QUSETION AND ANSWER OPTIONS TO DOM
     $questionDiv.html(question[gameRound].question);
     writeOptions();
@@ -196,6 +197,14 @@ function grabQandA(gameRound) {
     // }, 11000)
 }
 
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
 
 $(function () {
     grabQandA(game.round);
