@@ -3,6 +3,9 @@
 var $header = $(".header");
 var $questionDiv = $("#question");
 var $timerDiv = $("#timer");
+var $correct = $("#overlay_correct");
+var $incorrect = $("#overlay_incorrect");
+var $timesUp = $("#overlay_timesUp");
 
 // GAME OBJECTS FOR REFERNCE AND GAME PLAY
 var triviaQuestions = {
@@ -138,6 +141,20 @@ var game = {
 }
 
 // HELPER FUNCTIONS
+var timer;
+function timerFunc() {
+    var timeleft = 10;
+    timer = setInterval(function(){
+      document.getElementById("progressBar").value = 10 - --timeleft;
+      if(timeleft <= 0) {
+        alert("Time's Up!");
+        clearInterval(timer);
+        game.numberIncorrect.push(game.round);
+        game.round++
+        grabQandA(game.round);
+      }
+    },1000);    
+}
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -155,10 +172,13 @@ function writeQandAs(gameRound) {
 }
 function clickListeners(gameRound) {
     $(".option").on("click", function() {
+        clearInterval(timer);
         userAnswer = $(this).text();
         if (userAnswer === correct) {
+            // toggleOverlay("correct");
             game.numberCorrect.push(gameRound);
         } else {
+            // toggleOverlay("incorrect");
             game.numberIncorrect.push(gameRound);
         }
         // INCREMENT UP AND START A NEW ROUND
@@ -182,11 +202,28 @@ function gameSummary(finalGame) {
         $(".answers").append($summaryChunk)
     }
 }
+function toggleOverlay(answer){
+    var overlayMessage;
+    var overlay = $("#overlay");
+    if (answer === "correct") {overlayMessage = $("#overlay_correct")}
+    if (answer === "incorrect") {overlayMessage = $("#overlay_incorrect")}
+    if (answer === "timesUp") {overlayMessage = $("#overlay_timesUp")}
+    overlay.css("opacity", ".8");
+    console.log(overlayMessage);
+	if(overlay.css("display") == "block"){
+		overlay.css("display", "none");
+		overlayMessage.css("display", "none");
+	} else {
+        overlay.css("display", "block");
+		overlayMessage.css("display", "block");
+	}
+}
+
 // VARIABLE FOR EACH QUESTION ROUND
 var answers = [];
 var correct = "";
 var userAnswer = ""
-var timer;
+
 
 // MAIN ROUND RESET FUNCTION
 function grabQandA(gameRound) {
@@ -217,6 +254,9 @@ function grabQandA(gameRound) {
     //SET UP EVENT LISTENER TO SELECT ANSWERS
     clickListeners(gameRound);
 
+    timerFunc();
+    
+    
     // setInterval(function(){
     //   alert("TIMES UP");
     // }, 11000)
@@ -258,114 +298,3 @@ $(function () {
 
 
 // element to track how many questions asked and remaining "4/10"
-
-function startScreen() { // INITIALIZE THE GAME AND PRINT A WELCOME MESSAGE, WAIT FOR START
-    
-}
-
-function newTimer() { // BEGINS A NEW COUNTDOWN TIMER FOR EACH QUESTION, CALLED UPON QUESTION INITIALIZATION
-
-}
-
-function newQuestion() { // PULLS AND PRINTS A NEW QUESTION TO THE CURRENT VIEW, SEND THE ANSWERS TO THE OPTIONS FUNCTION
-
-}
-
-function timeOut() { // END FUNTION CALLED WHEN THE TIME RUNS DOWN
-    // this might be better as a conditional inside the newtimer?
-}
-
-function gameEnd() { // TALLIES UP THE SCORE FROM THE GAME OBJECT, PRINTS RESULTS AND INCREMENTS WIN/LOSS
-
-}
-
-// $.ajax({
-//     type: "GET",
-//     url: "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple",
-//     success: function (response) {
-//         $questionDiv.text(response);
-//     }
-// });
-// var triviaQuestions;
-
-
-// $.ajax({
-//     url: "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple",
-//     method: "GET",
-//     dataType: "json",
-//     success: function (response) {
-//         triviaQuestions = response;
-//     }
-// });
-// $questionDiv.text(triviaQuestions.results[0].question);
-// console.log(response);
-// $option1Div.text("testing");
-
-
-// this isn't working BUT prehaps I can make my ajax call for each question, increment up the results indices
-// var triviaQuestions;
-// $(function () {
-//     $.ajax({
-//         url: "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple",
-//         method: "GET",
-//         async: true
-//       }).then(function(response) {
-//         triviaQuestions.push(response);
-//         game.currentQuestion = response.results[0].question;
-//         // testFunction(response);
-//         console.log(triviaQuestions)
-        
-//       });
-// });
-// console.log(triviaQuestions)
-// $questionDiv.text(game.currentQuestion)
-
-
-// function printAjax(domTarget, dataTarget, array, correctA) { // this works well but gets a new question each function call.
-//     $.ajax({
-//         url: "https://opentdb.com/api.php?amount=1",
-//         method: "GET"
-//     }).then(function(data) {
-//         domTarget.text(data.results[0][dataTarget]);
-//         console.log(data);
-//         correctA = data.results[0].correct_answer;
-//         array.push(data.results[0].correct_answer);
-//         for (var i ; i < data.results[0].incorrect_answers.length ; i++) {
-//             array.push(i);
-//         }
-//     })
-// }
-
-
-
-// printAjax($questionDiv, "question", answers, correct);
-// console.log(answers, correct);
-// printAjax($option1Div, "correct_answer");
-// var currentQuestion;
-
-// function storeQuestion(object) {
-//     $.ajax({
-//         url: "https://opentdb.com/api.php?amount=1",
-//         method: "GET"
-//     }).then(function(data) {
-//         object = data.results;
-//     })
-// }
-// function currentQuestion()
-
-// function compileAnswers() {
-
-// }
-
-
-
-
-
-var timeleft = 10;
-var downloadTimer = setInterval(function(){
-  document.getElementById("progressBar").value = 10 - --timeleft;
-  if(timeleft <= 0)
-    // alert("Time's Up!");
-    clearInterval(downloadTimer);
-},1000);
-

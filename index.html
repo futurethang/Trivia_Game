@@ -11,6 +11,23 @@
     <link rel="stylesheet" href="assets/styles/style.css">
   </head>
   <body>
+    <!-- Start Overlay -->
+        <div id="overlay"></div>
+    <!-- End Overlay -->
+    <!-- Start Special Centered Box -->
+        <div id="overlay_correct">
+            <p>That's Right!</p> 
+            <button onmousedown="toggleOverlay()">continue triva . . .</button>
+        </div>
+        <div id="overlay_incorrect">
+            <p>Wrong Answer!</p> 
+            <button onmousedown="toggleOverlay()">continue triva . . .</button>
+        </div>
+        <div id="overlay_timesUp">
+            <p>Time's Up!</p> 
+            <button onmousedown="toggleOverlay()">continue triva . . .</button>
+        </div>
+    <!-- End Special Centered Box -->
       <div class="container">
         <div class="header"><h1>TRIVIA!</h1></div>
         <div class="question" id="question"><h1>QUESTION</h1></div>

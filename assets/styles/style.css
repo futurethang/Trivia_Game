@@ -45,3 +45,25 @@
     background-color: darkgoldenrod;
     grid-area: f;
 }
+
+div#overlay {
+	display: none;
+	z-index: 2;
+	background: #000;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+}
+div#overlay_correct, div#overlay_incorrect, div#overlay_timesUp {
+	display: none;
+	position: relative;
+	z-index: 3;
+	margin: 150px auto 0px auto;
+	width: 500px; 
+	height: 300px;
+	background: #FFF;
+	color: #000;
+}
