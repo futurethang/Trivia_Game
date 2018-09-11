@@ -2,10 +2,6 @@
 
 var $header = $(".header");
 var $questionDiv = $("#question");
-var $option1Div = $("#option_1");
-var $option2Div = $("#option_2");
-var $option3Div = $("#option_3");
-var $option4Div = $("#option_4");
 var $timerDiv = $("#timer");
 
 // GAME OBJECTS FOR REFERNCE AND GAME PLAY
@@ -131,7 +127,7 @@ var triviaQuestions = {
           ]
        }
     ]
- }
+}
 
 var question = triviaQuestions.results; 
 
@@ -150,13 +146,41 @@ function shuffleArray(array) {
         array[j] = temp;
     }
 }
-function writeOptions() {
+function writeQandAs(gameRound) {
+    // !! add writing for round counter at the top, "Question 2 of 10"
+    $questionDiv.html(question[gameRound].question);
     for (var i = 0 ; i < answers.length ; i++ ) {
         $(".answers").append("<div class='option' id='option_" + (i+1) + "'><h3>"+ answers[i] + "</h3></div>");
     }
 }
+function clickListeners(gameRound) {
+    $(".option").on("click", function() {
+        userAnswer = $(this).text();
+        if (userAnswer === correct) {
+            game.numberCorrect.push(gameRound);
+        } else {
+            game.numberIncorrect.push(gameRound);
+        }
+        // INCREMENT UP AND START A NEW ROUND
+        game.round++;
+        console.log(game);
+        grabQandA(game.round);
+    })
+}
 function gameSummary(finalGame) {
-    
+    // CLEAR OUT THE DOM, GET RID OF ALL BUT HEADER, FOOTER, AND ANSWER AREA
+    $("#question, #timer").remove()
+    // DEFINE HTML ELEMENT VARIABLES TO APPEND A LIST OF THE TRIVIA QUESTIONS
+    var $summaryTitle = "<h3 class='summary'>You Got " + game.numberCorrect.length + " out of 10 correct</h3>";
+    $(".answers").html($summaryTitle);
+    for (let i = 0 ; i < question.length ; i++) {        
+        var $questionHeader = "<h4 class='summary'>Question Number " + (i+1) + "</h4>";
+        var $question = "<p class='summary'>" + question[i].question + "</p>";
+        var $correctAnswer = "<span class='summary'>The correct answer is: " + question[i].correct_answer + "</span>"
+        if (game.numberCorrect.includes(i)) {$correctAnswer = "<span class='summary'><b>" + question[i].correct_answer + "</b></span>"}
+        var $summaryChunk = "<div>" + $questionHeader + $question + $correctAnswer + "</div>"
+        $(".answers").append($summaryChunk)
+    }
 }
 // VARIABLE FOR EACH QUESTION ROUND
 var answers = [];
@@ -167,6 +191,7 @@ var timer;
 // MAIN ROUND RESET FUNCTION
 function grabQandA(gameRound) {
     if (gameRound >= 10) {
+        gameSummary(game);
         alert("NO MORE QUESTIONS GO TO SUMMARY"); // DEFINE A GAME-SUMMARY FUNCTION TO CALCULATE AND DISPLAY THE RESULTS
     }
 
@@ -175,36 +200,23 @@ function grabQandA(gameRound) {
     $(".option").remove();
     $questionDiv.empty();
 
-    // PREPARE ANSWERS ARRAY AND QUESTION FOR DOM PRINT
-    answers.push(question[gameRound].correct_answer);
+    // PREPARE ANSWERS ARRAY AND QUESTION FOR DOM PRINT ------ COULD BE A FUNCTION
     correct = question[gameRound].correct_answer;
+    answers.push(question[gameRound].correct_answer);
     // ADD INCORRECT ANSWERS TO ANSWER OPTIONS ARRAY
     for (var i = 0 ; i < question[gameRound].incorrect_answers.length ; i++) {
         answers.push(question[gameRound].incorrect_answers[i]);
-        console.log(question[gameRound].incorrect_answers[i]);
     }
+
     // SHUFFLE THE ARRAY
     shuffleArray(answers);
+
     // WRITE QUESTION AND ANSWER OPTIONS TO DOM
-    $questionDiv.html(question[gameRound].question);
-    writeOptions();
-    // !! add writing for round counter at the top, "Question 2 of 10"
-    
+    writeQandAs(gameRound);
+
     //SET UP EVENT LISTENER TO SELECT ANSWERS
-    $(".option").on("click", function() {
-        userAnswer = $(this).text();
-        if (userAnswer === correct) {
-            alert("CORRECT!");
-            game.numberCorrect.push(gameRound);
-        } else {
-            alert("WRONG!");
-            game.numberIncorrect.push(gameRound);
-        }
-        // INCREMENT UP AND START A NEW ROUND
-        game.round++;
-        console.log(game);
-        grabQandA(game.round);
-    })
+    clickListeners(gameRound);
+
     // setInterval(function(){
     //   alert("TIMES UP");
     // }, 11000)
