@@ -1,3 +1,14 @@
+// DEFINE HTML ELEMENT VARIABLES
+
+var $header = $(".header");
+var $questionDiv = $("#question");
+var $option1Div = $("#option_1");
+var $option2Div = $("#option_2");
+var $option3Div = $("#option_3");
+var $option4Div = $("#option_4");
+var $timerDiv = $("#timer");
+
+// GAME OBJECTS FOR REFERNCE AND GAME PLAY
 var triviaQuestions = {
     "response_code":0,
     "results":[
@@ -121,11 +132,74 @@ var triviaQuestions = {
        }
     ]
  }
- 
-var question = triviaQuestions.results;
 
-console.log(question);
+ var question = triviaQuestions.results; 
 
+var game = {
+    "round": 0,
+    "numberCorrect": [],
+    "numberIncorrect": [],
+}
+
+
+function writeOptions() {
+    for (var i = 0 ; i < answers.length ; i++ ) {
+        $(".answers").append("<div class='option' id='option_" + (i+1) + "'><h3>"+ answers[i] + "</h3></div>");
+    }
+}
+
+var answers = [];
+var correct = "";
+var userAnswer = ""
+
+function grabQandA(gameRound) {
+    if (gameRound >= 10) {
+        alert("NO MORE QUESTIONS GO TO SUMMARY"); // DEFINE A GAME-SUMMARY FUNCTION TO CALCULATE AND DISPLAY THE RESULTS
+    }
+
+    // CLEAR THE DOM TO PREP FOR NEW QUESTION
+    answers = [];
+    $(".option").remove();
+    $questionDiv.empty();
+
+    // PREPARE ANSWERS ARRAY AND QUESTION FOR DOM PRINT
+    answers.push(question[gameRound].correct_answer);
+    correct = question[gameRound].correct_answer;
+    // ADD INCORRECT ANSWERS TO ANSWER OPTIONS ARRAY
+    for (var i = 0 ; i < question[gameRound].incorrect_answers.length ; i++) {
+        answers.push(question[gameRound].incorrect_answers[i]);
+        console.log(question[gameRound].incorrect_answers[i]);
+    }
+
+    // WRITE QUSETION AND ANSWER OPTIONS TO DOM
+    $questionDiv.html(question[gameRound].question);
+    writeOptions();
+    // !! add writing for round counter at the top, "Question 2 of 10"
+    
+    //SET UP EVENT LISTENER TO SELECT ANSWERS
+    $(".option").on("click", function() {
+        userAnswer = $(this).text();
+        if (userAnswer === correct) {
+            alert("CORRECT!");
+            game.numberCorrect.push(gameRound);
+        } else {
+            alert("WRONG!");
+            game.numberIncorrect.push(gameRound);
+        }
+        // INCREMENT UP AND START A NEW ROUND
+        game.round++;
+        console.log(game);
+        grabQandA(game.round);
+    })
+    // setInterval(function(){
+    //   alert("TIMES UP");
+    // }, 11000)
+}
+
+
+$(function () {
+    grabQandA(game.round);
+});
 
 // $(function () {
    
@@ -158,15 +232,6 @@ console.log(question);
 
 
 
-// DEFINE HTML ELEMENT VARIABLES
-
-var $header = $(".header");
-var $questionDiv = $("#question");
-var $option1Div = $("#option_1");
-var $option2Div = $("#option_2");
-var $option3Div = $("#option_3");
-var $option4Div = $("#option_4");
-var $timerDiv = $("#timer");
 // element to track how many questions asked and remaining "4/10"
 
 function startScreen() { // INITIALIZE THE GAME AND PRINT A WELCOME MESSAGE, WAIT FOR START
@@ -187,14 +252,6 @@ function timeOut() { // END FUNTION CALLED WHEN THE TIME RUNS DOWN
 
 function gameEnd() { // TALLIES UP THE SCORE FROM THE GAME OBJECT, PRINTS RESULTS AND INCREMENTS WIN/LOSS
 
-}
-
-function testFunction(input) {
-    $questionDiv.text(JSON.parse(input));
-}
-
-var game = {
-    currentQuestion: "",
 }
 
 // $.ajax({
@@ -274,39 +331,10 @@ var game = {
 // function compileAnswers() {
 
 // }
-function writeOptions() {
-    for (var i = 0 ; i < answers.length ; i++ ) {
-        $(".answers").append("<div class='option' id='option_" + (i+1) + "'><h3>"+ answers[i] + "</h3></div>");
-    }
-}
-
-var answers = [];
-var correct = "";
-var userAnswer = ""
-
-function grabQandA(gameRound) {
-    answers.push(question[gameRound].correct_answer);
-    correct = question[gameRound].correct_answer;
-    for (var i = 0 ; i < question[gameRound].incorrect_answers.length ; i++) {
-        answers.push(question[gameRound].incorrect_answers[i]);
-        console.log(question[gameRound].incorrect_answers[i]);
-    }
-    $questionDiv.html(question[gameRound].question);
-    writeOptions();
-    $(".option").on("click", function() {
-        userAnswer = $(this).text();
-        if (userAnswer === correct) {
-            alert("CORRECT!");
-        } else {alert("WRONG!")}
-        
-    })
-    setInterval(function(){
-      alert("TIMES UP");
-    }, 11000)
-}
 
 
-grabQandA(5);
+
+
 
 var timeleft = 10;
 var downloadTimer = setInterval(function(){
