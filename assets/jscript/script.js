@@ -141,17 +141,30 @@ var game = {
     "numberIncorrect": [],
 }
 
-
+// HELPER FUNCTIONS
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
 function writeOptions() {
     for (var i = 0 ; i < answers.length ; i++ ) {
         $(".answers").append("<div class='option' id='option_" + (i+1) + "'><h3>"+ answers[i] + "</h3></div>");
     }
 }
-
+function gameSummary(finalGame) {
+    
+}
+// VARIABLE FOR EACH QUESTION ROUND
 var answers = [];
 var correct = "";
 var userAnswer = ""
+var timer;
 
+// MAIN ROUND RESET FUNCTION
 function grabQandA(gameRound) {
     if (gameRound >= 10) {
         alert("NO MORE QUESTIONS GO TO SUMMARY"); // DEFINE A GAME-SUMMARY FUNCTION TO CALCULATE AND DISPLAY THE RESULTS
@@ -172,7 +185,7 @@ function grabQandA(gameRound) {
     }
     // SHUFFLE THE ARRAY
     shuffleArray(answers);
-    // WRITE QUSETION AND ANSWER OPTIONS TO DOM
+    // WRITE QUESTION AND ANSWER OPTIONS TO DOM
     $questionDiv.html(question[gameRound].question);
     writeOptions();
     // !! add writing for round counter at the top, "Question 2 of 10"
@@ -195,15 +208,6 @@ function grabQandA(gameRound) {
     // setInterval(function(){
     //   alert("TIMES UP");
     // }, 11000)
-}
-
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
 }
 
 $(function () {
