@@ -167,13 +167,14 @@ function writeQandAs(gameRound) {
     // !! add writing for round counter at the top, "Question 2 of 10"
     $questionDiv.html(question[gameRound].question);
     for (var i = 0 ; i < answers.length ; i++ ) {
-        $(".answers").append("<a><div class='option' id='option_" + (i+1) + "'><div class='oval'>TT</div><h3>"+ answers[i] + "</h3></div></a>");
+        $(".answers").append("<a><div class='option' id='option_" + (i+1) + "'><div class='oval'>"+ (i+1) +"</div><h3>"+ answers[i] + "</h3></div></a>");
     }
 }
 function clickListeners(gameRound) {
     $(".option").on("click", function() {
         clearInterval(timer);
-        userAnswer = $(this).text();
+        userAnswer = $(this).find("h3").text();
+        console.log(userAnswer);
         if (userAnswer === correct) {
             // toggleOverlay("correct");
             game.numberCorrect.push(gameRound);
@@ -198,8 +199,9 @@ function gameSummary(finalGame) {
         var $question = "<p class='summary'>" + question[i].question + "</p>";
         var $correctAnswer = "<span class='summary'><i>The correct answer is :  " + question[i].correct_answer + "</i></span>"
         if (game.numberCorrect.includes(i)) {$correctAnswer = "<span class='summary'><b>" + question[i].correct_answer + "</b></span>"}
-        var $summaryChunk = "<div>" + $questionHeader + $question + $correctAnswer + "</div>"
+        var $summaryChunk = "<div>" + $questionHeader + $question + $correctAnswer + "<hr>" + "</div>"
         $(".answers").append($summaryChunk)
+
     }
 }
 function toggleOverlay(answer){

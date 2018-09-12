@@ -21,6 +21,10 @@ div {
     padding: 10px;
 }
 
+hr {
+    margin-top: 24px;
+}
+
 .header {
     /* background-color: #5353ff; */
     height: 80%;
@@ -102,6 +106,7 @@ div {
     justify-content: center;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.5em;
+    font-weight: bold;
     padding:8px;
   }
 
