@@ -167,7 +167,7 @@ function writeQandAs(gameRound) {
     // !! add writing for round counter at the top, "Question 2 of 10"
     $questionDiv.html(question[gameRound].question);
     for (var i = 0 ; i < answers.length ; i++ ) {
-        $(".answers").append("<a><div class='option' id='option_" + (i+1) + "'><h3>"+ answers[i] + "</h3></div></a>");
+        $(".answers").append("<a><div class='option' id='option_" + (i+1) + "'><div class='oval'>TT</div><h3>"+ answers[i] + "</h3></div></a>");
     }
 }
 function clickListeners(gameRound) {
