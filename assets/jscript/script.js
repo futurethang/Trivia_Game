@@ -167,7 +167,7 @@ function writeQandAs(gameRound) {
     // !! add writing for round counter at the top, "Question 2 of 10"
     $questionDiv.html(question[gameRound].question);
     for (var i = 0 ; i < answers.length ; i++ ) {
-        $(".answers").append("<div class='option' id='option_" + (i+1) + "'><h3>"+ answers[i] + "</h3></div>");
+        $(".answers").append("<a><div class='option' id='option_" + (i+1) + "'><h3>"+ answers[i] + "</h3></div></a>");
     }
 }
 function clickListeners(gameRound) {
@@ -196,7 +196,7 @@ function gameSummary(finalGame) {
     for (let i = 0 ; i < question.length ; i++) {        
         var $questionHeader = "<h4 class='summary'>Question Number " + (i+1) + "</h4>";
         var $question = "<p class='summary'>" + question[i].question + "</p>";
-        var $correctAnswer = "<span class='summary'>The correct answer is: " + question[i].correct_answer + "</span>"
+        var $correctAnswer = "<span class='summary'><i>The correct answer is :  " + question[i].correct_answer + "</i></span>"
         if (game.numberCorrect.includes(i)) {$correctAnswer = "<span class='summary'><b>" + question[i].correct_answer + "</b></span>"}
         var $summaryChunk = "<div>" + $questionHeader + $question + $correctAnswer + "</div>"
         $(".answers").append($summaryChunk)
@@ -251,10 +251,11 @@ function grabQandA(gameRound) {
     // WRITE QUESTION AND ANSWER OPTIONS TO DOM
     writeQandAs(gameRound);
 
+    timerFunc();
     //SET UP EVENT LISTENER TO SELECT ANSWERS
     clickListeners(gameRound);
 
-    timerFunc();
+    
     
     
     // setInterval(function(){

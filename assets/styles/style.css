@@ -1,3 +1,7 @@
+body {
+    background-color: #5353ff;
+}
+
 .container {
     width: 65%;
     height: 600px;
@@ -13,37 +17,75 @@
         "f f f f f f f f"
 }
 
+div {
+    padding: 10px;
+}
+
 .header {
-    background-color: darkgoldenrod;
+    /* background-color: #5353ff; */
+    height: 80%;
     grid-area: h;
+    font-family: 'Monsieur La Doulaise', cursive;
+    font-size: 2.5em;
+    font-weight: 100;
+    text-align: center;
+    color: #ffd700;
 }
 
 .question {
-    background-color: aqua;
+    /* background-color: aqua; */
     grid-area: q;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 2em;
-
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    text-align: center;
+    color: #eee;
+    padding-bottom: 24px;
 }
 
 .answers {
-    background-color: brown;
+    background-color: #2121dd;
     grid-area: a;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    margin-bottom: 24px;
+    border: 1px solid #ffd700;
 }
 
 .option {
     background-color: #ddd;
     grid-area: o;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    margin: 4px;
+    /* border: 1px solid #ffd700; */
 }
 
 .timer {
-    background-color: aqua;
+    /* background-color: aqua; */
     grid-area: t;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .footer {
     background-color: darkgoldenrod;
     grid-area: f;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+
+.summary {
+    color: #eee;
+}
+
+span.summary {
+    font-size: .75em;
 }
 
 div#overlay {
