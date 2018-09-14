@@ -1,6 +1,7 @@
 // DEFINE HTML ELEMENT VARIABLES
 
 var $header = $(".header");
+var $subheader = $(".subhead");
 var $questionDiv = $("#question");
 var $timerDiv = $("#timer");
 var $correct = $("#overlay_correct");
@@ -147,7 +148,7 @@ function timerFunc() {
     timer = setInterval(function(){
       document.getElementById("progressBar").value = 10 - --timeleft;
       if(timeleft <= 0) {
-        alert("Time's Up!");
+        alert("Time's Up . . .  \nClick OK for next question");
         clearInterval(timer);
         game.numberIncorrect.push(game.round);
         game.round++
@@ -166,6 +167,7 @@ function shuffleArray(array) {
 function writeQandAs(gameRound) {
     // !! add writing for round counter at the top, "Question 2 of 10"
     $questionDiv.html(question[gameRound].question);
+    if (game.round > 0) {$subheader.html("Question " + (game.round + 1) + " out of 10")}
     for (var i = 0 ; i < answers.length ; i++ ) {
         $(".answers").append("<a><div class='option' id='option_" + (i+1) + "'><div class='oval'>"+ (i+1) +"</div><h3>"+ answers[i] + "</h3></div></a>");
     }
@@ -195,10 +197,10 @@ function gameSummary(finalGame) {
     var $summaryTitle = "<h3 class='summary'>You Got " + game.numberCorrect.length + " out of 10 correct</h3>";
     $(".answers").html($summaryTitle);
     for (let i = 0 ; i < question.length ; i++) {        
-        var $questionHeader = "<h4 class='summary'>Question Number " + (i+1) + "</h4>";
+        var $questionHeader = "<h4 class='summary'>Question " + (i+1) + "</h4>";
         var $question = "<p class='summary'>" + question[i].question + "</p>";
-        var $correctAnswer = "<span class='summary'><i>The correct answer is :  " + question[i].correct_answer + "</i></span>"
-        if (game.numberCorrect.includes(i)) {$correctAnswer = "<span class='summary'><b>" + question[i].correct_answer + "</b></span>"}
+        var $correctAnswer = "<span class='summary'><i>The correct answer is : <b>" + question[i].correct_answer + "</b></i></span>"
+        if (game.numberCorrect.includes(i)) {$correctAnswer = "<span class='summary'>Your answer: <b>" + question[i].correct_answer + "</b> was correct!</span>"}
         var $summaryChunk = "<div>" + $questionHeader + $question + $correctAnswer + "<hr>" + "</div>"
         $(".answers").append($summaryChunk)
 
@@ -231,13 +233,14 @@ var userAnswer = ""
 function grabQandA(gameRound) {
     if (gameRound >= 10) {
         gameSummary(game);
-        alert("NO MORE QUESTIONS GO TO SUMMARY"); // DEFINE A GAME-SUMMARY FUNCTION TO CALCULATE AND DISPLAY THE RESULTS
+        alert("Finished! Check your answers . . . "); // DEFINE A GAME-SUMMARY FUNCTION TO CALCULATE AND DISPLAY THE RESULTS
     }
 
     // CLEAR THE DOM TO PREP FOR NEW QUESTION
     answers = [];
     $(".option").remove();
     $questionDiv.empty();
+    if (game.round > 0) {$subheader.empty();}
 
     // PREPARE ANSWERS ARRAY AND QUESTION FOR DOM PRINT ------ COULD BE A FUNCTION
     correct = question[gameRound].correct_answer;
