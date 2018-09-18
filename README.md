@@ -1,5 +1,7 @@
 # Trivia_Game
-A timer-based trivia game using HTML, CSS, and jQuery
+A timer-based trivia game using HTML, CSS, and jQuery. [Play the Trivia Game!](https://futurethang.github.io/Trivia_Game/)
+
+
 
 # Primary Project Requirements
 
