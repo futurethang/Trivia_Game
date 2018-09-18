@@ -1,7 +1,7 @@
 # Trivia_Game
 A timer-based trivia game using HTML, CSS, and jQuery. [Play the Trivia Game!](https://futurethang.github.io/Trivia_Game/)
 
-
+![trivia_trials](https://user-images.githubusercontent.com/17099707/45702793-91db7f00-bb27-11e8-86fa-2e71b0ea881b.png)
 
 # Primary Project Requirements
 
