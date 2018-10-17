@@ -3,7 +3,7 @@ A timer-based trivia game using HTML, CSS, and jQuery. [Play the Trivia Game!](h
 
 ![trivia_trials](https://user-images.githubusercontent.com/17099707/45702793-91db7f00-bb27-11e8-86fa-2e71b0ea881b.png)
 
-# Primary Project Requirements
+### Primary Project Requirements
 
 This project is part of the curriculum for University of Washington's Part Time Full Stack bootcamp. In it we reinforced principles of light web application design using HTML, CSS, and Javascript with the jQuery library. Special focus was made to make use of timers to advance the game and penalize for slow play. The challenges to meet were: 
 
@@ -17,6 +17,6 @@ With additional optional challenges:
 * Show only one question until the player answers it or their time runs out.
 * On the final screen, show the number of correct answers, and incorrect answers.
 
-# Personal Challenges and Lessons
+### Personal Challenges and Lessons
 
 In my approach to buiding this game I wanted to try the more difficult route and additionally include a fresh AJAX call from the Open Trivia API. At the time this was a larger challenge than expected, but I still utilized the API to get a set of trivia questions and answers to use. I used a fair amount of helper functions to break up the game operations, write clean DOM markup and set fresh event listeners. I also included use of some CSS Grid for my layout, including a case-specific fix for a Firefox font rendering glitch. I was prepared to include some <img> elements for the ovals to make it more "Trivial Pursuit"-like, but found a great raw CSS solution that also enabled more dynamic JS generated HTML. Bonus!
